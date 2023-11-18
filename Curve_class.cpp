@@ -2,7 +2,7 @@
 
     Circle::Point_3D Circle::get3dPoint (double t) const
     {
-    Circle::Point_3D temp;
+        Curve::Point_3D temp;
         temp.x = cos(t)*radius;
         temp.y = sin(t)*radius;
         temp.z = NULL;
@@ -11,7 +11,7 @@
 
     Circle::Vector_3D Circle::getFirstDerivative(double t) const
     {
-        Vector_3D temp;
+        Curve::Vector_3D temp;
         temp.x = -sin(t)*radius;
         temp.y = cos(t)*radius;
         temp.z = NULL;
@@ -30,7 +30,7 @@
 
     Ellipse::Point_3D Ellipse::get3dPoint (double t) const
     {
-        Point_3D temp;
+        Curve::Point_3D temp;
         temp.x = a*cos(t);
         temp.y = b*sin(t);
         temp.z = NULL;
@@ -39,7 +39,7 @@
 
     Ellipse::Vector_3D Ellipse::getFirstDerivative(double t) const
     {
-        Vector_3D temp;
+        Curve::Vector_3D temp;
         temp.x = a*(-sin(t));
         temp.y = cos(t) * b;
         temp.z = NULL;
@@ -58,7 +58,7 @@
 
     Helixe::Point_3D Helixe::get3dPoint (double t) const
     {
-        Point_3D temp;
+        Curve::Point_3D temp;
         temp.x = radius*cos(t);
         temp.y = radius*sin(t);
         temp.z = height*t;
@@ -67,7 +67,7 @@
 
     Helixe::Vector_3D Helixe::getFirstDerivative(double t) const
     {
-        Vector_3D temp;
+        Curve::Vector_3D temp;
         temp.x = -sin(t)*radius;
         temp.y = radius*cos(t);
         temp.z = height;

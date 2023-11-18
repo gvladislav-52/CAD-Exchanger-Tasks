@@ -1,39 +1,55 @@
 #include "Curve_class.h"
+#include <memory>
 
 int main()
 {
-    using std::cout, std::endl, std::vector;
+    using std::cout, std::endl, std::vector,std::shared_ptr, std::make_shared, std::dynamic_pointer_cast;
     srand(time(NULL));
-    vector<Curve*> curve_vector;
+
     int const LENGTH = 10;
-    int random_count;
-    double random_number;
-    double random_number2;
-    double random_t = 3.14/4;
+    double const RANDOM_T = 3.14/4;
+
+    vector<shared_ptr<Curve>> curve_vector;
+    vector<shared_ptr<Curve>> circle_vector;
+
+    int random_order;
+    double randon_value_one;
+    double random_number_two;
+
     for(int i = 0; i < LENGTH; i++)
     {
-        random_count = rand()%3+1;
-        switch(random_count)
+        random_order = rand()%3+1;
+        switch(random_order)
         {
             case 1:
-                random_number = rand()%10;
-                curve_vector.push_back(new Circle(random_number));
+                randon_value_one = rand()%10;
+                curve_vector.push_back(make_shared<Circle>(randon_value_one));
                 break;
             case 2:
-                random_number = rand()%10;
-                random_number2 = rand()%5;
-                curve_vector.push_back(new Ellipse(random_number,random_number2));
+                randon_value_one = rand()%10;
+                random_number_two = rand()%5;
+                curve_vector.push_back(make_shared<Ellipse>(randon_value_one,random_number_two));
                 break;
             case 3:
-                random_number = rand()%10;
-                random_number2 = rand()%5;
-                curve_vector.push_back(new Helixe(random_number,random_number2));
+                randon_value_one = rand()%10;
+                random_number_two = rand()%5;
+                curve_vector.push_back(make_shared<Helixe>(randon_value_one,random_number_two));
                 break;
         }
     }
 
-    for(const auto &curve: curve_vector)
+    for(auto &curve: curve_vector)
+        curve->Show(curve.get(), RANDOM_T);
+
+    cout << endl;
+    for (shared_ptr<Curve> curve : curve_vector)
     {
-        curve->Show(curve, random_t);
+        shared_ptr<Circle> circle = dynamic_pointer_cast<Circle>(curve);
+        if (circle)
+            circle_vector.push_back(circle);
     }
+
+    for (auto circle : circle_vector)
+        circle->Show(circle.get(),RANDOM_T);
+
 }
