@@ -26,6 +26,7 @@
 
         cout << "Circle:\nget3dPoint: ( x:= " << point_temp.x << ", y:= " << point_temp.y << ", z:= " << point_temp.z << ")" << endl;
         cout << "getFirstDerivative: ( x:= " << vector_temp.x << ", y:= " << vector_temp.y << ", z:= " << vector_temp.z << ")" << endl;
+        cout << "Radius: " << radius << endl;
     }
 
     Ellipse::Point_3D Ellipse::get3dPoint (double t) const

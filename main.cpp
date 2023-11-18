@@ -1,5 +1,6 @@
 #include "Curve_class.h"
 #include <memory>
+#include <algorithm>
 
 int main()
 {
@@ -49,7 +50,11 @@ int main()
             circle_vector.push_back(circle);
     }
 
+    std::sort(circle_vector.begin(), circle_vector.end(), [] (shared_ptr<Curve> c1, shared_ptr<Curve> c2)
+    {
+        return *dynamic_cast<Circle*>(c1.get()) < *dynamic_cast<Circle*>(c2.get());
+    });
+
     for (auto circle : circle_vector)
         circle->Show(circle.get(),RANDOM_T);
-
 }
