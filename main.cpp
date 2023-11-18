@@ -4,11 +4,12 @@
 
 int main()
 {
-    using std::cout, std::endl, std::vector,std::shared_ptr, std::make_shared, std::dynamic_pointer_cast;
+    using std::cout, std::endl, std::vector,std::shared_ptr, std::make_shared, std::dynamic_pointer_cast, std::sort;
     srand(time(NULL));
 
     int const LENGTH = 10;
     double const RANDOM_T = 3.14/4;
+    double sum = 0;
 
     vector<shared_ptr<Curve>> curve_vector;
     vector<shared_ptr<Curve>> circle_vector;
@@ -17,6 +18,7 @@ int main()
     double randon_value_one;
     double random_number_two;
 
+    cout << "\nDISPLAYING VECTOR ELEMENTS (LENGTH 10)" << endl;
     for(int i = 0; i < LENGTH; i++)
     {
         random_order = rand()%3+1;
@@ -50,11 +52,17 @@ int main()
             circle_vector.push_back(circle);
     }
 
-    std::sort(circle_vector.begin(), circle_vector.end(), [] (shared_ptr<Curve> c1, shared_ptr<Curve> c2)
+    cout << "OUTPUT OF A CONTAINER STORING ELEMENTS OF THE CIRCLE TYPE (SORTED): " << endl;
+    sort(circle_vector.begin(), circle_vector.end(), [] (shared_ptr<Curve> c1, shared_ptr<Curve> c2)
     {
         return *dynamic_cast<Circle*>(c1.get()) < *dynamic_cast<Circle*>(c2.get());
     });
 
     for (auto circle : circle_vector)
         circle->Show(circle.get(),RANDOM_T);
+
+    for(const auto &circle: circle_vector)
+        sum += dynamic_cast<Circle*> (circle.get())->getRadius();
+
+    cout << "\nTHE TOTAL SUM OF ALL THE RADII OF THE CURVES: " << sum << endl;
 }

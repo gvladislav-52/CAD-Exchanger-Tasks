@@ -33,6 +33,7 @@ public:
     Vector_3D getFirstDerivative(double t) const override;
     void Show(const Curve* const circle, double t) const override;
     bool operator<(const Circle& other) const { return radius < other.radius;}
+    double getRadius() {return radius;}
 };
 
 class Ellipse: public Curve
