@@ -1,5 +1,7 @@
 #include <iostream>
 #include <cmath>
+#include <vector>
+#include <time.h>
 
 class Curve
 {
@@ -14,7 +16,7 @@ public:
     };
     virtual Point_3D get3dPoint(double) const = 0;
     virtual Vector_3D getFirstDerivative(double) const = 0;
-    virtual void Show(const Curve& curve, double t) const = 0;
+    virtual void Show(const Curve* const, double t) const = 0;
     virtual ~Curve() {}
 };
 
@@ -42,11 +44,11 @@ public:
         return temp;
     }
 
-    void Show(const Curve& circle, double t) const override
+    void Show(const Curve* const circle, double t) const override
     {
         using std::cout, std::endl;
-        Curve::Point_3D point_temp = circle.get3dPoint(t);
-        Curve::Vector_3D vector_temp = circle.getFirstDerivative(t);
+        Curve::Point_3D point_temp = circle->get3dPoint(t);
+        Curve::Vector_3D vector_temp = circle->getFirstDerivative(t);
 
         cout << "Circle:\nget3dPoint: ( x:= " << point_temp.x << ", y:= " << point_temp.y << ", z:= " << point_temp.z << ")" << endl;
         cout << "getFirstDerivative: ( x:= " << vector_temp.x << ", y:= " << vector_temp.y << ", z:= " << vector_temp.z << ")" << endl;
@@ -77,11 +79,11 @@ public:
         return temp;
     }
 
-    void Show(const Curve& Ellipse, double t) const override
+    void Show(const Curve* const ellipse, double t) const override
     {
         using std::cout, std::endl;
-        Curve::Point_3D point_temp = Ellipse.get3dPoint(t);
-        Curve::Vector_3D vector_temp = Ellipse.getFirstDerivative(t);
+        Curve::Point_3D point_temp = ellipse->get3dPoint(t);
+        Curve::Vector_3D vector_temp = ellipse->getFirstDerivative(t);
 
         cout << "Ellipse:\nget3dPoint: ( x:= " << point_temp.x << ", y:= " << point_temp.y << ", z:= " << point_temp.z << ")" << endl;
         cout << "getFirstDerivative: ( x:= " << vector_temp.x << ", y:= " << vector_temp.y << ", z:= " << vector_temp.z << ")" << endl;
@@ -113,11 +115,11 @@ public:
         return temp;
     }
 
-    void Show(const Curve& Helixe, double t) const override
+    void Show(const Curve* const helixe, double t) const override
     {
         using std::cout, std::endl;
-        Curve::Point_3D point_temp = Helixe.get3dPoint(t);
-        Curve::Vector_3D vector_temp = Helixe.getFirstDerivative(t);
+        Curve::Point_3D point_temp = helixe->get3dPoint(t);
+        Curve::Vector_3D vector_temp = helixe->getFirstDerivative(t);
 
         cout << "Helixe:\nget3dPoint: ( x:= " << point_temp.x << ", y:= " << point_temp.y << ", z:= " << point_temp.z << ")" << endl;
         cout << "getFirstDerivative: ( x:= " << vector_temp.x << ", y:= " << vector_temp.y << ", z:= " << vector_temp.z << ")" << endl;
@@ -126,13 +128,39 @@ public:
 
 int main()
 {
-    using std::cout, std::endl;
-    Circle circle_forms(5.0);
-    circle_forms.Show(circle_forms,1.0);
-    cout << endl;
-    Ellipse ellipse_forms(3.0,2.0);
-    ellipse_forms.Show(ellipse_forms,0.5);
-    cout << endl;
-    Helixe helixe_forms(3.0,1.0);
-    helixe_forms.Show(helixe_forms,2.0);
+    using std::cout, std::endl, std::vector;
+    srand(time(NULL));
+    vector<Curve*> curve_vector;
+    int const LENGTH = 10;
+    int random_count;
+    double random_number;
+    double random_number2;
+    double random_t;
+    for(int i = 0; i < LENGTH; i++)
+    {
+        random_count = rand()%3+1;
+        switch(random_count)
+        {
+            case 1:
+                random_number = rand()%10;
+                curve_vector.push_back(new Circle(random_number));
+                break;
+            case 2:
+                random_number = rand()%10;
+                random_number2 = rand()%5;
+                curve_vector.push_back(new Ellipse(random_number,random_number2));
+                break;
+            case 3:
+                random_number = rand()%10;
+                random_number2 = rand()%5;
+                curve_vector.push_back(new Ellipse(random_number,random_number2));
+                break;
+        }
+    }
+
+    for(const auto &curve: curve_vector)
+    {
+        random_t = rand()%10;
+        curve->Show(curve, random_t);
+    }
 }
